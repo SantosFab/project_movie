@@ -1,48 +1,83 @@
 import 'package:flutter/material.dart';
+import 'package:project_movie/src/blocs/movies_bloc.dart';
+import 'package:project_movie/src/models/item_model.dart';
+import 'package:project_movie/src/page/page_detail.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
+  const MyHomePage({
+    Key? key,
+  }) : super(key: key);
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  @override
+  void initState() {
+    super.initState();
+    bloc.fetchAllMovies();
+  }
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  @override
+  void dispose() {
+    super.dispose();
+    bloc.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Center(child: Text('Filmes populares')),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+      body: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: StreamBuilder<ItemModel>(
+          stream: bloc.stream,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  'Ocorreu um error: ${snapshot.error}',
+                ),
+              );
+            }
+            if (snapshot.hasData) {
+              return _gridview(snapshot.data!);
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+    );
+  }
+
+  _gridview(ItemModel movies) {
+    return GridView.builder(
+      itemCount: movies.results.length,
+      gridDelegate:
+          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => PageDetail(
+              id: movies.results[index].id,
+              title: movies.results[index].title,
+              overview: movies.results[index].overview,
+              releaseDate: movies.results[index].releaseDate,
+              backDropPath: movies.results[index].backdropPath,
+              voteAverage: movies.results[index].voteAverega,
+            ),
+          )),
+          child: Padding(
+            padding: const EdgeInsetsDirectional.all(4),
+            child: Image.network(
+              'https://image.tmdb.org/t/p/w500${movies.results[index].posterPath}',
+              fit: BoxFit.cover,
+            ),
+          ),
+        );
+      },
     );
   }
 }
