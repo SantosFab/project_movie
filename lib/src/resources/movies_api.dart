@@ -21,7 +21,7 @@ class MoviesApi {
         'https://api.themoviedb.org/3/movie/$id/videos?api_key=$_apiKey');
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      return TrailerModel.froJsom(response.body);
+      return TrailerModel.fromJson(response.body);
     } else {
       throw Exception('Failed to loead trailers');
     }

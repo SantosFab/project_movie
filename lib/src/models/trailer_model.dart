@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: non_constant_identifier_names, library_private_types_in_public_api
 
 import 'dart:convert';
@@ -22,11 +23,14 @@ class TrailerModel {
     );
   }
 
-  factory TrailerModel.froJsom(String source) =>
+  factory TrailerModel.fromJson(String source) =>
       TrailerModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   int get id => _id;
   List<_Results> get results => _results;
+
+  @override
+  String toString() => 'TrailerModel(_id: $_id, _results: $_results)';
 }
 
 class _Results {
@@ -78,4 +82,9 @@ class _Results {
   bool get official => _official;
   String get publishedAt => _published_at;
   String get id => _id;
+
+  @override
+  String toString() {
+    return '_Results(_iso_639_1: $_iso_639_1, _iso_3166_1: $_iso_3166_1, _name: $_name, _key: $_key, _site: $_site, _size: $_size, _type: $_type, _official: $_official, _published_at: $_published_at, _id: $_id)';
+  }
 }
