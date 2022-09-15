@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:project_movie/src/models/trailer_model.dart';
 import 'package:project_movie/src/resources/repository.dart';
@@ -15,9 +14,9 @@ class TrailerBloc extends BlocBase {
 
   TrailerBloc() {
     _trailerId.stream.listen((value) async {
-      TrailerModel _trailerModel =
+      TrailerModel trailerModel =
           await _trailerRepository.fechallTrailer(value.toString());
-      _trailerFetcher.sink.add(_trailerModel);
+      _trailerFetcher.sink.add(trailerModel);
     });
   }
 

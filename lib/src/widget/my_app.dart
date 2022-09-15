@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         Bloc((i) => MoviesBloc()),
         Bloc((i) => TrailerBloc()),
       ],
-      dependencies: [],
+      dependencies: const [],
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
