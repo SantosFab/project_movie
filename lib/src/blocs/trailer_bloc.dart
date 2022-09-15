@@ -2,12 +2,11 @@ import 'dart:async';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:project_movie/src/models/trailer_model.dart';
 import 'package:project_movie/src/resources/repository.dart';
-import 'package:rxdart/rxdart.dart';
 
 class TrailerBloc extends BlocBase {
   final _trailerRepository = Repository();
-  final _trailerFetcher = BehaviorSubject<TrailerModel>();
-  final _trailerId = BehaviorSubject<int>();
+  final _trailerFetcher = StreamController<TrailerModel>.broadcast();
+  final _trailerId = StreamController<int>.broadcast();
 
   Stream<TrailerModel> get stream => _trailerFetcher.stream;
   StreamSink get sink => _trailerId.sink;
