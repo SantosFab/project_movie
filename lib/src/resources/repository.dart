@@ -6,5 +6,5 @@ class Repository {
   final moviesApi = MoviesApi();
 
   Future<ItemModel> fetchAllMovies() => moviesApi.fetchMovie();
-  Future<TrailerModel> fechallTrailer(id) => moviesApi.fetchTrailer(id);
+  Future<TrailerModel> fechallTrailer(String id) => moviesApi.fetchTrailer(id);
 }
