@@ -1,8 +1,9 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:project_movie/src/models/item_model.dart';
 import 'package:project_movie/src/resources/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-class MoviesBloc {
+class MoviesBloc extends BlocBase {
   final _repository = Repository();
   final _moviesFetcher = BehaviorSubject<ItemModel>();
 
@@ -13,9 +14,9 @@ class MoviesBloc {
     _moviesFetcher.sink.add(itemModel);
   }
 
-  dispose() {
+  @override
+  void dispose() {
+    super.dispose();
     _moviesFetcher.close();
   }
 }
-
-final bloc = MoviesBloc();

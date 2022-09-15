@@ -1,5 +1,7 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:project_movie/src/blocs/movies_bloc.dart';
+
 import 'package:project_movie/src/models/item_model.dart';
 import 'package:project_movie/src/page/page_detail.dart';
 
@@ -12,16 +14,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final bloc = BlocProvider.getBloc<MoviesBloc>();
+
   @override
   void initState() {
     super.initState();
     bloc.fetchAllMovies();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    bloc.dispose();
   }
 
   @override
