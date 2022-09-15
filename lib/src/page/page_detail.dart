@@ -10,7 +10,7 @@ class PageDetail extends StatefulWidget {
   final String title;
   final String overview;
   final String releaseDate;
-  final String backDropPath;
+  final String? backDropPath;
   final double voteAverage;
 
   const PageDetail({
@@ -32,7 +32,7 @@ class _PageDetailState extends State<PageDetail> {
   String get title => widget.title;
   String get overview => widget.overview;
   String get releaseDate => widget.releaseDate;
-  String get backDropPath => widget.backDropPath;
+  String? get backDropPath => widget.backDropPath;
   double get voteAverage => widget.voteAverage;
 
   final bloc = BlocProvider.getBloc<TrailerBloc>();

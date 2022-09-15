@@ -43,14 +43,14 @@ class ItemModel {
 
 class _Results {
   final bool _adult;
-  final String _backdrop_path;
+  final String? _backdrop_path;
   final List<int> _genre_ids;
   final int _id;
   final String _original_language;
   final String _original_title;
   final String _overview;
   final double _popularity;
-  final String _poster_path;
+  final String? _poster_path;
   final String _release_date;
   final String _title;
   final bool _video;
@@ -76,7 +76,7 @@ class _Results {
   factory _Results.fromMap(Map<String, dynamic> map) {
     return _Results(
       map['adult'] as bool,
-      map['backdrop_path'] as String,
+      map['backdrop_path'] != null ? map['backdrop_path'] as String : null,
       List<int>.from(
         (map['genre_ids'] as List<dynamic>),
       ),
@@ -85,7 +85,7 @@ class _Results {
       map['original_title'] as String,
       map['overview'] as String,
       map['popularity'] as double,
-      map['poster_path'] as String,
+      map['poster_path'] != null ? map['poster_path'] as String : null,
       map['release_date'] as String,
       map['title'] as String,
       map['video'] as bool,
@@ -95,14 +95,14 @@ class _Results {
   }
 
   bool get adult => _adult;
-  String get backdropPath => _backdrop_path;
+  String? get backdropPath => _backdrop_path;
   List<int> get genres => _genre_ids;
   int get id => _id;
   String get originalLanguage => _original_language;
   String get originalTitle => _original_title;
   String get overview => _overview;
   double get popularity => _popularity;
-  String get posterPath => _poster_path;
+  String? get posterPath => _poster_path;
   String get releaseDate => _release_date;
   String get title => _title;
   bool get video => _video;

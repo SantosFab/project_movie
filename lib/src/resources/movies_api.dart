@@ -6,8 +6,8 @@ class MoviesApi {
   final String _apiKey = 'a6d480541a151a410ba489d83fc81358';
 
   Future<ItemModel> fetchMovie() async {
-    var url =
-        Uri.parse('http://api.themoviedb.org/3/movie/popular?api_key=$_apiKey');
+    var url = Uri.parse(
+        'http://api.themoviedb.org/3/movie/popular?api_key=$_apiKey&language=pt-BR');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       return ItemModel.fromJson(response.body);
@@ -18,7 +18,7 @@ class MoviesApi {
 
   Future<TrailerModel> fetchTrailer(String id) async {
     var url = Uri.parse(
-        'https://api.themoviedb.org/3/movie/$id/videos?api_key=$_apiKey');
+        'https://api.themoviedb.org/3/movie/$id/videos?api_key=$_apiKey&language=pt-BR');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       return TrailerModel.fromJson(response.body);
