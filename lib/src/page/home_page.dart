@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:project_movie/src/blocs/floating_bloc.dart';
