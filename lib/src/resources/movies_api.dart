@@ -5,9 +5,10 @@ import 'package:project_movie/src/models/trailer_model.dart';
 class MoviesApi {
   final String _apiKey = 'a6d480541a151a410ba489d83fc81358';
 
-  Future<ItemModel> fetchMovie() async {
-    var url = Uri.parse(
-        'http://api.themoviedb.org/3/movie/popular?api_key=$_apiKey&language=pt-BR');
+  Future<ItemModel> fetchMovie(int page) async {
+    Uri url = Uri.parse(
+        'http://api.themoviedb.org/3/movie/popular?api_key=$_apiKey&language=pt-BR&page=$page');
+
     final response = await http.get(url);
     if (response.statusCode == 200) {
       return ItemModel.fromJson(response.body);
@@ -23,7 +24,7 @@ class MoviesApi {
     if (response.statusCode == 200) {
       return TrailerModel.fromJson(response.body);
     } else {
-      throw Exception('Failed to loead trailers');
+      throw Exception('Failed to load trailers');
     }
   }
 }
