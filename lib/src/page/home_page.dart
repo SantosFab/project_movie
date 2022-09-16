@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
+import 'package:project_movie/src/blocs/floating_bloc.dart';
 import 'package:project_movie/src/blocs/movies_bloc.dart';
-
 import 'package:project_movie/src/models/item_model.dart';
 import 'package:project_movie/src/page/page_detail.dart';
+import 'package:project_movie/src/style/custom_color.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
@@ -14,12 +17,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final bloc = BlocProvider.getBloc<MoviesBloc>();
+  late final MoviesBloc _blocMovies;
+  late final FloatingBloc _blocFloating;
+  int page = 1;
 
   @override
   void initState() {
     super.initState();
-    bloc.fetchAllMovies();
+    _blocMovies = BlocProvider.getBloc<MoviesBloc>();
+    _blocFloating = BlocProvider.getBloc<FloatingBloc>();
+    _blocMovies.sink.add(page);
   }
 
   @override
@@ -31,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Padding(
         padding: const EdgeInsets.all(4.0),
         child: StreamBuilder<ItemModel>(
-          stream: bloc.stream,
+          stream: _blocMovies.stream,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Center(
@@ -47,6 +54,44 @@ class _MyHomePageState extends State<MyHomePage> {
           },
         ),
       ),
+      floatingActionButton: StreamBuilder<int>(
+          stream: _blocFloating.stream,
+          initialData: 1,
+          builder: (context, snapshot) {
+            if (snapshot.data == 1) {
+              return FloatingActionButton(
+                backgroundColor: Colors.white,
+                onPressed: () {
+                  _blocMovies.sink.add(++page);
+                  if (page > 1) {
+                    _blocFloating.sink.add(page);
+                  }
+                },
+                child: const Icon(Icons.arrow_circle_right),
+              );
+            }
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                FloatingActionButton(
+                  heroTag: 'btn1',
+                  onPressed: () {
+                    _blocMovies.sink.add(--page);
+                    _blocFloating.sink.add(page);
+                  },
+                  backgroundColor: CustomColor.white,
+                  child: const Icon(Icons.arrow_circle_left),
+                ),
+                const SizedBox(width: 10),
+                FloatingActionButton(
+                  heroTag: 'btn2',
+                  backgroundColor: Colors.white,
+                  onPressed: () => _blocMovies.sink.add(++page),
+                  child: const Icon(Icons.arrow_circle_right),
+                ),
+              ],
+            );
+          }),
     );
   }
 
