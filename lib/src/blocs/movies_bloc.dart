@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:project_movie/src/models/item_model.dart';
 import 'package:project_movie/src/resources/repository.dart';
