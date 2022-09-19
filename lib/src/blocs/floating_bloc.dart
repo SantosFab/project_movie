@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:bloc_pattern/bloc_pattern.dart';
 
 class FloatingBloc extends BlocBase {
-  final StreamController<int> _foating = StreamController<int>.broadcast();
+  final StreamController<bool> _foating = StreamController<bool>.broadcast();
 
-  Stream<int> get stream => _foating.stream;
-  Sink<int> get sink => _foating.sink;
+  Stream<bool> get stream => _foating.stream;
+  Sink<bool> get sink => _foating.sink;
 
   @override
   void dispose() {

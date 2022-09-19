@@ -52,17 +52,17 @@ class _MyHomePageState extends State<MyHomePage> {
           },
         ),
       ),
-      floatingActionButton: StreamBuilder<int>(
+      floatingActionButton: StreamBuilder<bool>(
           stream: _blocFloating.stream,
-          initialData: 1,
+          initialData: true,
           builder: (context, snapshot) {
-            if (snapshot.data == 1) {
+            if (page == 1) {
               return FloatingActionButton(
                 backgroundColor: Colors.white,
                 onPressed: () {
                   _blocMovies.sink.add(++page);
                   if (page > 1) {
-                    _blocFloating.sink.add(page);
+                    _blocFloating.sink.add(true);
                   }
                 },
                 child: const Icon(Icons.arrow_circle_right),
@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     _blocMovies.sink.add(--page);
                     if (page == 1) {
-                      _blocFloating.sink.add(page);
+                      _blocFloating.sink.add(false);
                     }
                   },
                   backgroundColor: CustomColor.white,
