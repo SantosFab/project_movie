@@ -14,6 +14,9 @@ class MoviesAnimacaoBloc extends BlocBase {
   Sink get sink => _moviesId.sink;
 
   MoviesAnimacaoBloc() {
+    getMovies();
+  }
+  getMovies() {
     _moviesId.stream.listen((value) async {
       ItemModel itemModel = await _repository.fetchAllMovies(genre: value);
       _moviesFetcher.sink.add(itemModel);
