@@ -7,5 +7,9 @@ class Repository {
 
   Future<ItemModel> fetchAllMovies({int? page, String? genre}) =>
       moviesApi.fetchMovie(page: page, genre: genre);
-  Future<TrailerModel> fechallTrailer(String id) => moviesApi.fetchTrailer(id);
+
+  Future<TrailerModel> fetchAllTrailer(String id) => moviesApi.fetchTrailer(id);
+
+  Future<ItemModel> fetchSearch(String pesquisa) =>
+      moviesApi.fetchSearch(pesquisa: pesquisa);
 }
