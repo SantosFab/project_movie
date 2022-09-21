@@ -12,9 +12,13 @@ class TrailerBloc extends BlocBase {
   StreamSink get sink => _trailerId.sink;
 
   TrailerBloc() {
+    fetchTrailer();
+  }
+
+  Future<void> fetchTrailer() async {
     _trailerId.stream.listen((value) async {
       TrailerModel trailerModel =
-          await _trailerRepository.fechallTrailer(value.toString());
+          await _trailerRepository.fetchAllTrailer(value.toString());
       _trailerFetcher.sink.add(trailerModel);
     });
   }

@@ -13,7 +13,19 @@ class MoviesApi {
     if (response.statusCode == 200) {
       return ItemModel.fromJson(response.body);
     } else {
-      throw Exception('Failed to load post');
+      throw Exception('Falhar em encontrar os filmes');
+    }
+  }
+
+  Future<ItemModel> fetchSearch({required String pesquisa}) async {
+    late Uri url = Uri.parse(
+        'https://api.themoviedb.org/3/search/movie?api_key=$_apiKey&language=pt-BR&query=$pesquisa');
+
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      return ItemModel.fromJson(response.body);
+    } else {
+      throw Exception('Falha em encontrar o filme');
     }
   }
 
@@ -24,7 +36,7 @@ class MoviesApi {
     if (response.statusCode == 200) {
       return TrailerModel.fromJson(response.body);
     } else {
-      throw Exception('Failed to load trailers');
+      throw Exception('Falhar em encontrar os trailers');
     }
   }
 }

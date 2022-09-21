@@ -30,7 +30,7 @@ class TextFrom extends StatelessWidget {
 
   String? _validor(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Para pesquisar, é preciso digitar o nome do filmes';
+      return 'Para pesquisar, é preciso digitar o nome do filme';
     }
     return null;
   }

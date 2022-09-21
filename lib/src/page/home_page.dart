@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_movie/src/page/movie_page.dart';
+import 'package:project_movie/src/page/search_page.dart';
 import 'package:project_movie/src/utils/genres.dart';
 import 'package:project_movie/src/widget/text_from.dart';
 
@@ -13,7 +14,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   final GlobalKey<FormState> _fromKey = GlobalKey();
 
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller =
+      TextEditingController(text: 'Homem de ferro');
   late final TabController _tabController;
   @override
   void initState() {
@@ -74,5 +76,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (from != null && !from.validate()) {
       return;
     }
+    String textSearch = _controller.text.replaceAll(' ', '+').toLowerCase();
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SearchPage(search: textSearch),
+      ),
+    );
   }
 }

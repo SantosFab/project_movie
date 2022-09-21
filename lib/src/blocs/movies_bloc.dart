@@ -5,7 +5,7 @@ import 'package:project_movie/src/models/item_model.dart';
 import 'package:project_movie/src/resources/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-class MoviesAnimacaoBloc extends BlocBase {
+class MoviesBloc extends BlocBase {
   final _repository = Repository();
   final _moviesFetcher = StreamController<ItemModel>.broadcast();
   final _moviesId = BehaviorSubject<String>();
@@ -13,10 +13,10 @@ class MoviesAnimacaoBloc extends BlocBase {
   Stream<ItemModel> get stream => _moviesFetcher.stream;
   Sink get sink => _moviesId.sink;
 
-  MoviesAnimacaoBloc() {
-    getMovies();
+  MoviesBloc() {
+    fetchMovies();
   }
-  getMovies() {
+  Future<void> fetchMovies() async {
     _moviesId.stream.listen((value) async {
       ItemModel itemModel = await _repository.fetchAllMovies(genre: value);
       _moviesFetcher.sink.add(itemModel);
