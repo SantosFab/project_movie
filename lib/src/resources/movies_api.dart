@@ -5,15 +5,9 @@ import 'package:project_movie/src/models/trailer_model.dart';
 class MoviesApi {
   final String _apiKey = 'a6d480541a151a410ba489d83fc81358';
 
-  Future<ItemModel> fetchMovie({String? genre, required int page}) async {
-    late Uri url;
-    if (genre != null) {
-      url = Uri.parse(
-          'https://api.themoviedb.org/3/discover/movie?api_key=$_apiKey&language=pt-BR&sort_by=popularity.desc&include_adult=false&include_video=false&page=$page&with_genres=$genre&with_watch_monetization_types=flatrate');
-    } else {
-      url = Uri.parse(
-          'http://api.themoviedb.org/3/movie/popular?api_key=$_apiKey&language=pt-BR&page=$page');
-    }
+  Future<ItemModel> fetchMovie({String? genre, int? page}) async {
+    late Uri url = Uri.parse(
+        'https://api.themoviedb.org/3/discover/movie?api_key=$_apiKey&language=pt-BR&sort_by=popularity.desc&include_adult=false&include_video=false&page=$page&with_genres=$genre&with_watch_monetization_types=flatrate');
 
     final response = await http.get(url);
     if (response.statusCode == 200) {

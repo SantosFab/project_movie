@@ -1,28 +1,26 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
-import 'package:project_movie/src/blocs/movies_popular_bloc.dart';
+import 'package:project_movie/src/blocs/movies_animacao_bloc.dart';
 import 'package:project_movie/src/models/item_model.dart';
 import 'package:project_movie/src/page/page_detail.dart';
 
-class PopularPage extends StatefulWidget {
-  const PopularPage({
-    Key? key,
-  }) : super(key: key);
+class MoviePage extends StatefulWidget {
+  final String type;
+  const MoviePage({Key? key, required this.type}) : super(key: key);
+
   @override
-  State<PopularPage> createState() => _PopularPageState();
+  State<MoviePage> createState() => _MoviePageState();
 }
 
-class _PopularPageState extends State<PopularPage> {
-  late final MoviesPopularBloc _blocMovies;
-
-  int page = 1;
+class _MoviePageState extends State<MoviePage> {
+  late final MoviesAnimacaoBloc _blocMovies;
+  String get type => widget.type;
 
   @override
   void initState() {
     super.initState();
-    _blocMovies = BlocProvider.getBloc<MoviesPopularBloc>();
-
-    _blocMovies.sink.add(page);
+    _blocMovies = BlocProvider.getBloc<MoviesAnimacaoBloc>();
+    _blocMovies.sink.add(type);
   }
 
   @override

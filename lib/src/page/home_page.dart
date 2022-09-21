@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_movie/src/page/animacao_page.dart';
-import 'package:project_movie/src/page/drama_page.dart';
-import 'package:project_movie/src/page/ficcao_page.dart';
-import 'package:project_movie/src/page/popular_page.dart';
+import 'package:project_movie/src/page/movie_page.dart';
+import 'package:project_movie/src/utils/genres.dart';
 import 'package:project_movie/src/widget/text_from.dart';
 
 class HomePage extends StatefulWidget {
@@ -47,7 +45,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     labelPadding: const EdgeInsets.only(top: 14),
                     controller: _tabController,
                     tabs: const [
-                      Text('Popular'),
+                      Text('Aventura'),
                       Text('Ficção'),
                       Text('Drama'),
                       Text('Animação'),
@@ -61,10 +59,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         body: TabBarView(
           controller: _tabController,
           children: const <Widget>[
-            PopularPage(),
-            FiccaoPage(),
-            DramaPage(),
-            AnimacaoPage(),
+            MoviePage(type: Genres.aventura),
+            MoviePage(type: Genres.ficcao),
+            MoviePage(type: Genres.drama),
+            MoviePage(type: Genres.animacao),
           ],
         ),
       ),
