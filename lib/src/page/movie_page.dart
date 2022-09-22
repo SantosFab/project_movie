@@ -1,8 +1,10 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:project_movie/src/blocs/movies_bloc.dart';
+import 'package:project_movie/src/blocs/display_bloc.dart';
 import 'package:project_movie/src/models/item_model.dart';
-import 'package:project_movie/src/page/page_detail.dart';
+import 'package:project_movie/src/widget/grid_display.dart';
+import 'package:project_movie/src/widget/list_display.dart';
 
 class MoviePage extends StatefulWidget {
   final String type;
@@ -13,13 +15,15 @@ class MoviePage extends StatefulWidget {
 }
 
 class _MoviePageState extends State<MoviePage> {
-  late final MoviesBloc _blocMovies;
   String get type => widget.type;
+  late final MoviesBloc _blocMovies;
+  late final DisplayBloc _blocDisplay;
 
   @override
   void initState() {
     super.initState();
     _blocMovies = BlocProvider.getBloc<MoviesBloc>();
+    _blocDisplay = BlocProvider.getBloc<DisplayBloc>();
     _blocMovies.sink.add(type);
   }
 
@@ -39,43 +43,25 @@ class _MoviePageState extends State<MoviePage> {
               );
             }
             if (snapshot.hasData) {
-              return _gridview(snapshot.data!);
+              AsyncSnapshot<ItemModel> movies = snapshot;
+
+              return StreamBuilder(
+                stream: _blocDisplay.stream,
+                initialData: true,
+                builder: (context, snapshot) {
+                  if (snapshot.data == true) {
+                    return ListDisplay(
+                      snapshot: movies,
+                    );
+                  }
+                  return GridDisplay(snapshot: movies);
+                },
+              );
             }
             return const Center(child: CircularProgressIndicator());
           },
         ),
       ),
-    );
-  }
-
-  _gridview(ItemModel movies) {
-    return GridView.builder(
-      itemCount: movies.results.length,
-      gridDelegate:
-          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => PageDetail(
-                id: movies.results[index].id,
-                title: movies.results[index].title,
-                overview: movies.results[index].overview,
-                releaseDate: movies.results[index].releaseDate,
-                backDropPath: movies.results[index].backdropPath,
-                voteAverage: movies.results[index].voteAverega,
-              ),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsetsDirectional.all(4),
-            child: Image.network(
-              'https://image.tmdb.org/t/p/w500${movies.results[index].posterPath}',
-              fit: BoxFit.cover,
-            ),
-          ),
-        );
-      },
     );
   }
 }

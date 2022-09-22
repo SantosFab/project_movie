@@ -5,6 +5,7 @@ import 'package:project_movie/src/blocs/movies_bloc.dart';
 import 'package:project_movie/src/blocs/search_bloc.dart';
 
 import 'package:project_movie/src/blocs/trailer_bloc.dart';
+import 'package:project_movie/src/blocs/display_bloc.dart';
 import 'package:project_movie/src/page/home_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
       blocs: [
         Bloc((i) => TrailerBloc()),
         Bloc((i) => MoviesBloc()),
-        Bloc((i) => SearchBloc())
+        Bloc((i) => SearchBloc()),
+        Bloc((i) => DisplayBloc()),
       ],
       dependencies: const [],
       child: MaterialApp(

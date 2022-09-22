@@ -1,4 +1,6 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
+import 'package:project_movie/src/blocs/display_bloc.dart';
 import 'package:project_movie/src/page/movie_page.dart';
 import 'package:project_movie/src/page/search_page.dart';
 import 'package:project_movie/src/utils/genres.dart';
@@ -12,14 +14,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  final GlobalKey<FormState> _fromKey = GlobalKey();
-
-  final TextEditingController _controller =
-      TextEditingController(text: 'Homem de ferro');
+  late final GlobalKey<FormState> _fromKey;
+  late final TextEditingController _controller;
   late final TabController _tabController;
+  late final DisplayBloc _bloc;
   @override
   void initState() {
+    _fromKey = GlobalKey();
+    _controller = TextEditingController();
     _tabController = TabController(length: 4, vsync: this);
+    _bloc = BlocProvider.getBloc<DisplayBloc>();
 
     super.initState();
   }
@@ -30,8 +34,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Filmes'),
+          actions: [
+            IconButton(
+              onPressed: () => _bloc.sink.add(true),
+              icon: const Icon(Icons.list),
+            ),
+            IconButton(
+              onPressed: () => _bloc.sink.add(false),
+              icon: const Icon(Icons.grid_on),
+            ),
+          ],
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(100),
+            preferredSize: const Size.fromHeight(110),
             child: Padding(
               padding: const EdgeInsets.all(12),
               child: Column(
