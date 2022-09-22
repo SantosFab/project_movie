@@ -12,7 +12,7 @@ class ListDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: 250,
+        width: 240,
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: ListView.builder(
           itemCount: snapshot.data!.results.length,
@@ -39,7 +39,7 @@ class ListDisplay extends StatelessWidget {
                       children: <Widget>[
                         Image.network(
                           'https://image.tmdb.org/t/p/w500${movies.results[index].posterPath}',
-                          height: 360,
+                          height: 350,
                         ),
                         Padding(
                           padding: const EdgeInsets.all(12.0),
