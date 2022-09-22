@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:project_movie/src/blocs/display_bloc.dart';
 import 'package:project_movie/src/page/movie_page.dart';
 import 'package:project_movie/src/page/search_page.dart';
+import 'package:project_movie/src/style/custom_color.dart';
 import 'package:project_movie/src/utils/genres.dart';
 import 'package:project_movie/src/widget/text_from.dart';
 
@@ -57,8 +58,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       submitted: _getMovie,
                     ),
                   ),
+                  const SizedBox(height: 10),
                   TabBar(
-                    labelPadding: const EdgeInsets.only(top: 14),
+                    labelColor: CustomColor.black,
+                    unselectedLabelColor: CustomColor.white,
+                    indicator: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: CustomColor.white),
+                    labelPadding: const EdgeInsets.all(4),
                     controller: _tabController,
                     tabs: const [
                       Text('Aventura'),
@@ -66,7 +73,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       Text('Drama'),
                       Text('Animação'),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
