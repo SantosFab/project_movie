@@ -12,7 +12,7 @@ class ListDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: 320,
+        width: 240,
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: ListView.builder(
           itemCount: snapshot.data!.results.length,
@@ -33,20 +33,24 @@ class ListDisplay extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(40),
-                child: Card(
-                  child: Column(
-                    children: <Widget>[
-                      Image.network(
-                        'https://image.tmdb.org/t/p/w500${movies.results[index].posterPath}',
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Text(
-                          movies.results[index].title,
-                          style: CustomStyle.feature,
+                child: SizedBox(
+                  child: Card(
+                    child: Column(
+                      children: <Widget>[
+                        Image.network(
+                          'https://image.tmdb.org/t/p/w500${movies.results[index].posterPath}',
+                          height: 350,
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                            movies.results[index].title,
+                            style: CustomStyle.feature,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
