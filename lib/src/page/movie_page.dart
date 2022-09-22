@@ -50,11 +50,9 @@ class _MoviePageState extends State<MoviePage> {
                 initialData: true,
                 builder: (context, snapshot) {
                   if (snapshot.data == true) {
-                    return ListDisplay(
-                      snapshot: movies,
-                    );
+                    return GridDisplay(snapshot: movies);
                   }
-                  return GridDisplay(snapshot: movies);
+                  return ListDisplay(snapshot: movies);
                 },
               );
             }

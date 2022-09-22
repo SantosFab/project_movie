@@ -36,11 +36,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           title: const Text('Filmes'),
           actions: [
             IconButton(
-              onPressed: () => _bloc.sink.add(true),
+              onPressed: () => _bloc.sink.add(false),
               icon: const Icon(Icons.list),
             ),
             IconButton(
-              onPressed: () => _bloc.sink.add(false),
+              onPressed: () => _bloc.sink.add(true),
               icon: const Icon(Icons.grid_on),
             ),
           ],
