@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_movie/src/models/item_model.dart';
 import 'package:project_movie/src/page/page_detail.dart';
+import 'package:project_movie/src/utils/url_default.dart';
 
 class GridDisplay extends StatelessWidget {
   final AsyncSnapshot<ItemModel> snapshot;
@@ -32,9 +33,9 @@ class GridDisplay extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsetsDirectional.all(4),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(30),
                 child: Image.network(
-                  'https://image.tmdb.org/t/p/w500${movies.results[index].posterPath}',
+                  '${UrlDefault.urlImgw500}${movies.results[index].posterPath}',
                 ),
               ),
             ),

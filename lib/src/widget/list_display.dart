@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_movie/src/models/item_model.dart';
 import 'package:project_movie/src/page/page_detail.dart';
 import 'package:project_movie/src/style/custom_style.dart';
+import 'package:project_movie/src/utils/url_default.dart';
 
 class ListDisplay extends StatelessWidget {
   final AsyncSnapshot<ItemModel> snapshot;
@@ -32,13 +33,13 @@ class ListDisplay extends StatelessWidget {
                 ),
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(40),
+                borderRadius: BorderRadius.circular(55),
                 child: SizedBox(
                   child: Card(
                     child: Column(
                       children: <Widget>[
                         Image.network(
-                          'https://image.tmdb.org/t/p/w500${movies.results[index].posterPath}',
+                          '${UrlDefault.urlImgw500}${movies.results[index].posterPath}',
                           height: 350,
                         ),
                         Padding(

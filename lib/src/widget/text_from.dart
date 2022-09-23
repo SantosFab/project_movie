@@ -12,16 +12,16 @@ class TextFrom extends StatelessWidget {
       controller: controller,
       onFieldSubmitted: submitted,
       decoration: InputDecoration(
-        label:
-            Text('Pesquise filmes', style: TextStyle(color: CustomColor.grey)),
+        label: const Text('Pesquisar filme',
+            style: TextStyle(color: CustomColor.grey)),
         hintText: 'Ex: Homem de ferro 2',
-        prefixIcon: Icon(Icons.search, color: CustomColor.grey),
+        prefixIcon: const Icon(Icons.search, color: CustomColor.grey),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: CustomColor.grey),
+          borderSide: const BorderSide(color: CustomColor.grey),
         ),
       ),
       validator: (value) => _validor(value),

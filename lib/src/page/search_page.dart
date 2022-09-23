@@ -2,7 +2,8 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:project_movie/src/blocs/search_bloc.dart';
 import 'package:project_movie/src/models/item_model.dart';
-import 'package:project_movie/src/widget/list_display.dart';
+import 'package:project_movie/src/style/custom_style.dart';
+import 'package:project_movie/src/widget/grid_display.dart';
 
 class SearchPage extends StatefulWidget {
   final String search;
@@ -32,11 +33,25 @@ class _SearchPageState extends State<SearchPage> {
       body: StreamBuilder<ItemModel>(
         stream: _bloc.stream,
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListDisplay(snapshot: snapshot);
-          } else if (snapshot.hasError) {
+          if (snapshot.hasError) {
             return const Text(
                 'Não foi possível encontrar um filme, por favor tente novamente');
+          } else if (snapshot.hasData && snapshot.data!.results.isEmpty) {
+            return Center(
+              child: SizedBox(
+                width: 300,
+                child: Text(
+                  'Não foi encontrar nenhum filme',
+                  textAlign: TextAlign.center,
+                  style: CustomStyle.textTitle,
+                ),
+              ),
+            );
+          } else if (snapshot.hasData) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GridDisplay(snapshot: snapshot),
+            );
           }
           return const Center(child: CircularProgressIndicator());
         },
