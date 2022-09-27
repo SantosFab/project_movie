@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:project_movie/src/blocs/trailer_bloc.dart';
 import 'package:project_movie/src/models/trailer_model.dart';
 import 'package:project_movie/src/style/custom_style.dart';
+import 'package:project_movie/src/utils/url_default.dart';
+import 'package:project_movie/src/widget/trailer_view.dart';
 
 class PageDetail extends StatefulWidget {
   final int id;
@@ -35,12 +37,15 @@ class _PageDetailState extends State<PageDetail> {
   String? get backDropPath => widget.backDropPath;
   double get voteAverage => widget.voteAverage;
 
-  final bloc = BlocProvider.getBloc<TrailerBloc>();
-  final PageController controller = PageController(viewportFraction: 1 / 2);
+  late final TrailerBloc _bloc;
+  late final PageController _controllerPage;
+
   @override
   void initState() {
     super.initState();
-    bloc.sink.add(id);
+    _bloc = BlocProvider.getBloc<TrailerBloc>();
+    _controllerPage = PageController(viewportFraction: 1 / 2);
+    _bloc.sink.add(id);
   }
 
   @override
@@ -58,7 +63,7 @@ class _PageDetailState extends State<PageDetail> {
               SizedBox(
                 height: 200,
                 child: Image.network(
-                  'https://image.tmdb.org/t/p/w500$backDropPath',
+                  '${UrlDefault.urlImgw500}$backDropPath',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -70,7 +75,9 @@ class _PageDetailState extends State<PageDetail> {
               Row(
                 children: [
                   IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.favorite)),
+                    onPressed: () {},
+                    icon: const Icon(Icons.favorite),
+                  ),
                   Text(
                     voteAverage.toString(),
                     style: CustomStyle.feature,
@@ -88,7 +95,7 @@ class _PageDetailState extends State<PageDetail> {
               ),
               const SizedBox(height: 10),
               StreamBuilder<TrailerModel>(
-                stream: bloc.stream,
+                stream: _bloc.stream,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     if (snapshot.data!.results.isEmpty) {
@@ -97,7 +104,31 @@ class _PageDetailState extends State<PageDetail> {
                         style: CustomStyle.textTitle,
                       );
                     }
-                    return _viewTrailer(snapshot);
+                    TrailerModel trailer = snapshot.data!;
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Trailer', style: CustomStyle.textTitle),
+                        SizedBox(
+                          height: 305,
+                          child: PageView.builder(
+                            padEnds: false,
+                            controller: _controllerPage,
+                            itemCount: trailer.results.length,
+                            itemBuilder: (context, index) {
+                              if (trailer.results[index].site == 'YouTube') {
+                                return TrailerView(
+                                  trailer: trailer.results[index],
+                                );
+                              }
+                              return Container();
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  } else if (snapshot.hasError) {
+                    const Text('Error, não foi possível obter trailer');
                   }
                   return Container();
                 },
@@ -106,45 +137,6 @@ class _PageDetailState extends State<PageDetail> {
           ),
         ),
       ),
-    );
-  }
-
-  Column _viewTrailer(AsyncSnapshot<TrailerModel> snapshot) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Trailer', style: CustomStyle.textTitle),
-        SizedBox(
-          height: 140,
-          child: PageView.builder(
-            padEnds: false,
-            controller: controller,
-            itemCount: snapshot.data!.results.length,
-            itemBuilder: (context, index) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Container(
-                      margin: const EdgeInsets.all(4),
-                      constraints: const BoxConstraints.expand(),
-                      color: Colors.grey,
-                      child: const Icon(Icons.play_arrow),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Text(
-                      snapshot.data!.results[index].name,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
-        ),
-      ],
     );
   }
 }

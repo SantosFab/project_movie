@@ -5,7 +5,7 @@ import 'dart:convert';
 
 class TrailerModel {
   final int _id;
-  final List<_Results> _results;
+  final List<Results> _results;
 
   TrailerModel(
     this._id,
@@ -15,9 +15,9 @@ class TrailerModel {
   factory TrailerModel.fromMap(Map<String, dynamic> map) {
     return TrailerModel(
       map['id'] as int,
-      List<_Results>.from(
+      List<Results>.from(
         (map['results'] as List<dynamic>).map(
-          (x) => _Results.fromMap(x as Map<String, dynamic>),
+          (x) => Results.fromMap(x as Map<String, dynamic>),
         ),
       ),
     );
@@ -27,13 +27,13 @@ class TrailerModel {
       TrailerModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   int get id => _id;
-  List<_Results> get results => _results;
+  List<Results> get results => _results;
 
   @override
   String toString() => 'TrailerModel(_id: $_id, _results: $_results)';
 }
 
-class _Results {
+class Results {
   final String _iso_639_1;
   final String _iso_3166_1;
   final String _name;
@@ -45,7 +45,7 @@ class _Results {
   final String _published_at;
   final String _id;
 
-  _Results(
+  Results(
     this._iso_639_1,
     this._iso_3166_1,
     this._name,
@@ -58,8 +58,8 @@ class _Results {
     this._id,
   );
 
-  factory _Results.fromMap(Map<String, dynamic> map) {
-    return _Results(
+  factory Results.fromMap(Map<String, dynamic> map) {
+    return Results(
         map['iso_639_1'] as String,
         map['iso_3166_1'] as String,
         map['name'] as String,
