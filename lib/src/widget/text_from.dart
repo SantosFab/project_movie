@@ -4,7 +4,9 @@ import 'package:project_movie/src/style/custom_color.dart';
 class TextFrom extends StatelessWidget {
   final TextEditingController? controller;
   final ValueChanged<String>? submitted;
-  const TextFrom({Key? key, this.submitted, this.controller}) : super(key: key);
+  final void Function()? iconMethod;
+  const TextFrom({Key? key, this.submitted, this.controller, this.iconMethod})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +18,12 @@ class TextFrom extends StatelessWidget {
             style: TextStyle(color: CustomColor.grey)),
         hintText: 'Ex: Homem de ferro 2',
         prefixIcon: const Icon(Icons.search, color: CustomColor.grey),
+        suffixIcon: IconButton(
+          icon: const Icon(Icons.search),
+          onPressed: iconMethod,
+          iconSize: 35,
+          color: CustomColor.white,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
         ),

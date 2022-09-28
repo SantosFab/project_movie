@@ -56,6 +56,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     child: TextFrom(
                       controller: _controller,
                       submitted: _getMovie,
+                      iconMethod: () => _getMovie(_controller.text),
                     ),
                   ),
                   const SizedBox(height: 10),
