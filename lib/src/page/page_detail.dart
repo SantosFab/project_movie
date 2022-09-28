@@ -62,10 +62,17 @@ class _PageDetailState extends State<PageDetail> {
             children: [
               SizedBox(
                 height: 200,
-                child: Image.network(
-                  '${UrlDefault.urlImgw500}$backDropPath',
-                  fit: BoxFit.cover,
-                ),
+                child: backDropPath != null
+                    ? Image.network(
+                        '${UrlDefault.urlImgw500}$backDropPath',
+                        fit: BoxFit.cover,
+                      )
+                    : Center(
+                        child: Text(
+                          'Esse filme não possui backDropPath',
+                          style: CustomStyle.feature,
+                        ),
+                      ),
               ),
               const SizedBox(height: 10),
               Text(

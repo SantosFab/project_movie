@@ -8,16 +8,16 @@ import 'package:rxdart/rxdart.dart';
 class MoviesBloc extends BlocBase {
   final _repository = Repository();
   final _moviesFetcher = StreamController<ItemModel>.broadcast();
-  final _moviesId = BehaviorSubject<String>();
+  final _moviesGenre = BehaviorSubject<String>();
 
   Stream<ItemModel> get stream => _moviesFetcher.stream;
-  Sink get sink => _moviesId.sink;
+  Sink get sink => _moviesGenre.sink;
 
   MoviesBloc() {
     fetchMovies();
   }
   Future<void> fetchMovies() async {
-    _moviesId.stream.listen((value) async {
+    _moviesGenre.stream.listen((value) async {
       ItemModel itemModel = await _repository.fetchAllMovies(genre: value);
       _moviesFetcher.sink.add(itemModel);
     });
