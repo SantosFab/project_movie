@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:project_movie/src/blocs/video_controll.dart';
+import 'package:project_movie/src/utils/video_controll.dart';
 import 'package:project_movie/src/models/trailer_model.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
